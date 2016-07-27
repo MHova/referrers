@@ -1,5 +1,7 @@
 package com.mhova;
 
+import com.mhova.resources.ReferrersResource;
+
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -23,7 +25,8 @@ public class ReferrersApplication extends Application<ReferrersConfiguration> {
     @Override
     public void run(final ReferrersConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        final ReferrersResource referrers = new ReferrersResource();
+        environment.jersey().register(referrers);
     }
 
 }
