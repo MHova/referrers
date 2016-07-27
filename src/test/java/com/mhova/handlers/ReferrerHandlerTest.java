@@ -14,13 +14,13 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import com.mhova.api.DomainSightings;
-import com.mhova.db.ReferrersDAO;
+import com.mhova.db.DomainsDAO;
 
 public class ReferrerHandlerTest {
     private ReferrerHandler classUnderTest;
 
     @Mock
-    private ReferrersDAO    dao;
+    private DomainsDAO    dao;
 
     @Before
     public void setup() {
@@ -30,14 +30,14 @@ public class ReferrerHandlerTest {
 
     @Test
     public void insert_and_count_domains() {
-        final String url = "http://google.com/blahbitty/blah";
         final String domain = "google.com";
+        final String url = "http://" + domain + "/blahbitty/blah";
         
-        when(dao.countDomains(domain)).thenReturn(10);
+        when(dao.getCount(domain)).thenReturn(10);
 
         final DomainSightings result = classUnderTest.addReferrer(makeURL(url));
         
-        verify(dao).insert(url, domain);
+        verify(dao).insertOrIncrementCount(domain);
         
         assertThat(result.domain, equalTo(domain));
         assertThat(result.sightings, equalTo(10));

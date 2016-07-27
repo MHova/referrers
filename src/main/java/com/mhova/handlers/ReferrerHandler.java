@@ -3,20 +3,20 @@ package com.mhova.handlers;
 import java.net.URL;
 
 import com.mhova.api.DomainSightings;
-import com.mhova.db.ReferrersDAO;
+import com.mhova.db.DomainsDAO;
 
 public class ReferrerHandler {
-    private final ReferrersDAO referrersDAO;
+    private final DomainsDAO domainsDAO;
 
-    public ReferrerHandler(final ReferrersDAO referrersDAO) {
-        this.referrersDAO = referrersDAO;
+    public ReferrerHandler(final DomainsDAO domainsDAO) {
+        this.domainsDAO = domainsDAO;
     }
 
     public DomainSightings addReferrer(final URL url) {
         final String domain = url.getHost();
         
-        referrersDAO.insert(url.toString(), domain);
-        final int domainCount = referrersDAO.countDomains(domain);
+        domainsDAO.insertOrIncrementCount(domain);
+        final int domainCount = domainsDAO.getCount(domain);
         
         return new DomainSightings(domain, domainCount);
     }
