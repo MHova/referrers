@@ -20,7 +20,7 @@ public class ReferrerHandlerTest {
     private ReferrerHandler classUnderTest;
 
     @Mock
-    private DomainsDAO    dao;
+    private DomainsDAO      dao;
 
     @Before
     public void setup() {
@@ -32,7 +32,7 @@ public class ReferrerHandlerTest {
     public void insert_and_count_domains() {
         final String domain = "google.com";
         final String url = "http://" + domain + "/blahbitty/blah";
-        
+
         when(dao.getCount(domain)).thenReturn(10);
 
         final DomainSightings result = classUnderTest.addReferrer(makeURL(url));
@@ -41,6 +41,16 @@ public class ReferrerHandlerTest {
         
         assertThat(result.domain, equalTo(domain));
         assertThat(result.sightings, equalTo(10));
+    }
+
+    @Test
+    public void domain_names_are_case_insensitive() {
+        final String domain = "WwW.GooGLE.cOm";
+        final String url = "http://" + domain + "/blahbitty/blah";
+
+        classUnderTest.addReferrer(makeURL(url));
+
+        verify(dao).insertOrIncrementCount(domain.toLowerCase());
     }
 
     private URL makeURL(final String s) {

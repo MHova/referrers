@@ -13,7 +13,7 @@ public class ReferrerHandler {
     }
 
     public DomainSightings addReferrer(final URL url) {
-        final String domain = url.getHost();
+        final String domain = url.getHost().toLowerCase();
         
         domainsDAO.insertOrIncrementCount(domain);
         final int domainCount = domainsDAO.getCount(domain);
