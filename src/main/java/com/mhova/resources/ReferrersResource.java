@@ -14,6 +14,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.codahale.metrics.annotation.Timed;
+import com.mhova.api.DomainSightings;
+import com.mhova.api.Referrer;
 
 @Path("/referrers")
 public class ReferrersResource {
