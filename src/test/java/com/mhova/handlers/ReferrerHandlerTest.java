@@ -8,12 +8,15 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import com.mhova.api.DomainSightings;
+import com.mhova.api.Referrers;
 import com.mhova.db.DomainsDAO;
 
 public class ReferrerHandlerTest {
@@ -51,6 +54,20 @@ public class ReferrerHandlerTest {
         classUnderTest.addReferrer(makeURL(url));
 
         verify(dao).insertOrIncrementCount(domain.toLowerCase());
+    }
+    
+    @Test
+    public void get_top_three_referrers() {
+        final List<DomainSightings> list = new LinkedList<>();
+        list.add(new DomainSightings("blah", 10));
+        list.add(new DomainSightings("whee", 44));
+        list.add(new DomainSightings("yay", 3));
+        
+        when(dao.getTopThreeDomains()).thenReturn(list);
+        
+        final Referrers result = classUnderTest.getTopThreeReferrers();
+        
+        assertThat(result.referrers, equalTo(list));
     }
 
     private URL makeURL(final String s) {

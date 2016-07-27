@@ -3,6 +3,7 @@ package com.mhova.handlers;
 import java.net.URL;
 
 import com.mhova.api.DomainSightings;
+import com.mhova.api.Referrers;
 import com.mhova.db.DomainsDAO;
 
 public class ReferrerHandler {
@@ -19,5 +20,9 @@ public class ReferrerHandler {
         final int domainCount = domainsDAO.getCount(domain);
         
         return new DomainSightings(domain, domainCount);
+    }
+
+    public Referrers getTopThreeReferrers() {
+        return new Referrers(domainsDAO.getTopThreeDomains());
     }
 }

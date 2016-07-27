@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.codahale.metrics.annotation.Timed;
 import com.mhova.api.Referrer;
+import com.mhova.api.Referrers;
 import com.mhova.handlers.ReferrerHandler;
 
 @Path("/referrers")
@@ -39,5 +41,13 @@ public class ReferrersResource {
         }
 
         return Response.ok(referrerHandler.addReferrer(url)).build();
+    }
+
+    @GET
+    @Path("/top-three")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Timed
+    public Referrers topThreeReferrers() {
+        return referrerHandler.getTopThreeReferrers();
     }
 }
