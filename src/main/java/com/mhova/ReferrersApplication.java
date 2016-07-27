@@ -7,6 +7,7 @@ import com.mhova.handlers.ReferrerHandler;
 import com.mhova.resources.ReferrersResource;
 
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -26,6 +27,8 @@ public class ReferrersApplication extends Application<ReferrersConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<ReferrersConfiguration> bootstrap) {
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
+
         bootstrap.addBundle(new MigrationsBundle<ReferrersConfiguration>() {
             @Override
             public DataSourceFactory getDataSourceFactory(final ReferrersConfiguration configuration) {
