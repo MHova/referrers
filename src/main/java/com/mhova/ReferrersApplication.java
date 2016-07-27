@@ -2,6 +2,7 @@ package com.mhova;
 
 import org.skife.jdbi.v2.DBI;
 
+import com.mhova.db.ReferrersDAO;
 import com.mhova.handlers.ReferrerHandler;
 import com.mhova.resources.ReferrersResource;
 
@@ -38,7 +39,8 @@ public class ReferrersApplication extends Application<ReferrersConfiguration> {
                     final Environment environment) {
 
         final DBI jdbi = new DBIFactory().build(environment, configuration.getDataSourceFactory(), "referrers-db");
-        environment.jersey().register(new ReferrersResource(new ReferrerHandler()));
+        final ReferrersDAO referrersDAO = jdbi.onDemand(ReferrersDAO.class);
+        environment.jersey().register(new ReferrersResource(new ReferrerHandler(referrersDAO)));
     }
 
 }
