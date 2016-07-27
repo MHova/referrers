@@ -14,11 +14,17 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.codahale.metrics.annotation.Timed;
-import com.mhova.api.DomainSightings;
 import com.mhova.api.Referrer;
+import com.mhova.handlers.ReferrerHandler;
 
 @Path("/referrers")
 public class ReferrersResource {
+    private final ReferrerHandler referrerHandler;
+
+    public ReferrersResource(ReferrerHandler referrerHandler) {
+        this.referrerHandler = referrerHandler;
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -32,6 +38,6 @@ public class ReferrersResource {
             return Response.status(Status.BAD_REQUEST).entity(referrer.url + " is not a valid url").build();
         }
 
-        return Response.ok(new DomainSightings(url.getHost(), 5)).build();
+        return Response.ok(referrerHandler.addReferrer(url)).build();
     }
 }
