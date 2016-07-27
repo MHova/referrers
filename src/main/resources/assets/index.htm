@@ -35,11 +35,75 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <div id="referrers"></div>
+    <div id="content"></div>
     <script type="text/babel">
+      var ReferrersDiv = React.createClass({
+        getInitialState: function() {
+          return {data: { referrers: [] }};
+        },
+
+        componentDidMount: function() {
+          $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+              this.setState({data: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+              console.error(this.props.url, status, err.toString());
+            }.bind(this)
+          });
+        },
+
+        render: function() {
+          return (
+            <div className="referrersDiv">
+              <h1>Top Three Referrers</h1>
+              <TopReferrersTable data={this.state.data} />
+            </div>
+          );
+        }
+      });
+
+      var TopReferrersTable = React.createClass({
+        render: function() {
+          var rows = this.props.data.referrers.map(function(referrer) {
+            return (
+              <ReferrerRow data={referrer} key={referrer.domain}/>
+            );
+          });
+
+          return (
+            <table className="topReferrersTable">
+              <thead>
+              <tr>
+                <th>Domain</th>
+                <th>Sightings</th>
+              </tr>
+              </thead>
+              <tbody>
+                {rows}
+              </tbody>
+            </table>
+          );
+        }
+      });
+
+      var ReferrerRow = React.createClass({
+        render: function() {
+          return (
+            <tr>
+              <td>{this.props.data.domain}</td>
+              <td>{this.props.data.sightings}</td>
+            </tr>
+          );
+        }
+      });
+
       ReactDOM.render(
-        <h1>Helllloooo Nurse!</h1>,
-        document.getElementById('referrers')
+        <ReferrersDiv url="/application/api/referrers/top-three"/>,
+        document.getElementById('content')
       );
     </script>
   </body>
