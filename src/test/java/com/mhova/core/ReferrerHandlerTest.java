@@ -1,4 +1,4 @@
-package com.mhova.handlers;
+package com.mhova.core;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -16,6 +16,7 @@ import org.mockito.Mock;
 
 import com.mhova.api.DomainSightings;
 import com.mhova.api.Referrers;
+import com.mhova.core.ReferrerHandler;
 import com.mhova.db.DomainsDAO;
 
 public class ReferrerHandlerTest {

@@ -2,8 +2,8 @@ package com.mhova;
 
 import org.skife.jdbi.v2.DBI;
 
+import com.mhova.core.ReferrerHandler;
 import com.mhova.db.DomainsDAO;
-import com.mhova.handlers.ReferrerHandler;
 import com.mhova.resources.ReferrersResource;
 
 import io.dropwizard.Application;
