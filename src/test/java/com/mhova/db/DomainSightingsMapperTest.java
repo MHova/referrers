@@ -1,7 +1,6 @@
 package com.mhova.db;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -32,8 +31,8 @@ public class DomainSightingsMapperTest {
         
         final DomainSightings result = classUnderTest.map(-1, rs, null);
         
-        assertThat(result.domain, equalTo(domain));
-        assertThat(result.sightings, equalTo(sightings));
+        assertThat(result.domain).isEqualTo(domain);
+        assertThat(result.sightings).isEqualTo(sightings);
     }
 
 }
