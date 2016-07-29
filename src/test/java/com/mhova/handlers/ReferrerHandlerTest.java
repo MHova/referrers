@@ -36,11 +36,9 @@ public class ReferrerHandlerTest {
         final String domain = "google.com";
         final String url = "http://" + domain + "/blahbitty/blah";
 
-        when(dao.getCount(domain)).thenReturn(10);
+        when(dao.recordSighting(domain)).thenReturn(10);
 
         final DomainSightings result = classUnderTest.addReferrer(makeURL(url));
-        
-        verify(dao).insertOrIncrementCount(domain);
         
         assertThat(result.domain, equalTo(domain));
         assertThat(result.sightings, equalTo(10));
@@ -53,7 +51,7 @@ public class ReferrerHandlerTest {
 
         classUnderTest.addReferrer(makeURL(url));
 
-        verify(dao).insertOrIncrementCount(domain.toLowerCase());
+        verify(dao).recordSighting(domain.toLowerCase());
     }
     
     @Test
