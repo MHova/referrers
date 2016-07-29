@@ -1,7 +1,6 @@
-package com.mhova.handlers;
+package com.mhova.core;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -17,6 +16,7 @@ import org.mockito.Mock;
 
 import com.mhova.api.DomainSightings;
 import com.mhova.api.Referrers;
+import com.mhova.core.ReferrerHandler;
 import com.mhova.db.DomainsDAO;
 
 public class ReferrerHandlerTest {
@@ -40,8 +40,8 @@ public class ReferrerHandlerTest {
 
         final DomainSightings result = classUnderTest.addReferrer(makeURL(url));
         
-        assertThat(result.domain, equalTo(domain));
-        assertThat(result.sightings, equalTo(10));
+        assertThat(result.domain).isEqualTo(domain);
+        assertThat(result.sightings).isEqualTo(10);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ReferrerHandlerTest {
         
         final Referrers result = classUnderTest.getTopThreeReferrers();
         
-        assertThat(result.referrers, equalTo(list));
+        assertThat(result.referrers).isEqualTo(list);
     }
 
     private URL makeURL(final String s) {

@@ -1,4 +1,4 @@
-package com.mhova.handlers;
+package com.mhova.core;
 
 import java.net.URL;
 
