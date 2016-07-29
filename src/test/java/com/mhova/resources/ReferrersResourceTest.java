@@ -42,7 +42,7 @@ public class ReferrersResourceTest {
     @Test
     public void top_three() {
         final List<DomainSightings> domainSightings = new LinkedList<>();
-        domainSightings.add(new DomainSightings("the thing I love about rivers is", 9));
+        domainSightings.add(new DomainSightings("what I love most about rivers is", 9));
         final Referrers referrers = new Referrers(domainSightings);
         when(handler.getTopThreeReferrers()).thenReturn(referrers);
 
@@ -65,7 +65,7 @@ public class ReferrersResourceTest {
 
     @Test
     public void add_referrer_bad_url() {
-        final String url = "you never step in the same river twice";
+        final String url = "you can't step in the same river twice";
 
         final Response response = resources.client().target("/referrers").request().post(Entity.json(new Referrer(url)));
 
