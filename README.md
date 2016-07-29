@@ -47,6 +47,6 @@ Get the top three referring domains by the number of sightings.
             "sightings" : 10
           },
           ...
-          ]
+        ]
       }
       ```
